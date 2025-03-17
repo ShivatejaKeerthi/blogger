@@ -4,12 +4,14 @@ import axios from 'axios';
 
 function App(){
   const[posts,setPosts] = useState([]);
+  const[originalPosts,setOriginalPosts] = useState([]);
   const[loading,setLoading] = useState(true);
 
   useEffect(()=>{
     axios.get('https://jsonplaceholder.typicode.com/posts')
     .then((res)=>{
       setPosts(res.data);
+      setOriginalPosts(res.data);
       setLoading(false);
     })
     .catch((err)=>{
@@ -23,6 +25,7 @@ function App(){
     axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
     .then((res)=>{
       setPosts(res.data);
+      setOriginalPosts(res.data);
       setLoading(false);
     })
     .catch((err)=>{
@@ -32,7 +35,7 @@ function App(){
   }
 
   const searchPostsByTitle = (title) => {
-    const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(title.toLowerCase()));
+    const filteredPosts = originalPosts.filter(post => post.title.toLowerCase().includes(title.toLowerCase()));
     setPosts(filteredPosts);
   }
 
@@ -49,15 +52,7 @@ function App(){
       <select onChange={(e) => {
         const userId = e.target.value;
         if (userId === "0") {
-          axios.get('https://jsonplaceholder.typicode.com/posts')
-          .then((res)=>{
-            setPosts(res.data);
-            setLoading(false);
-          })
-          .catch((err)=>{
-            console.log(err);
-            setLoading(false);
-          });
+          setPosts(originalPosts);
         } else {
           filterByUserId(userId);
         }
