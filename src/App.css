@@ -78,6 +78,17 @@
     flex-direction: row;
   }
 }
+@media(min-width: 769px){
+  .filteringDiv{
+    flex-direction: row;
+  }
+}
+
+@media(max-width: 768px){
+  .filteringDiv{
+    flex-direction: column;
+  }
+}
 
 .filter{
   display: flex;
@@ -118,4 +129,13 @@ input{
   margin: 5px;
   border-radius: 30px;
   
+}
+
+.searchDiv{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin: 5px;
+  padding: 5px;
+  align-items: center;
 }

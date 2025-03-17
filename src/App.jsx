@@ -31,16 +31,9 @@ function App(){
     })
   }
 
-  const searchpostsbytitle = (title) => {
-    axios.get(`https://jsonplaceholder.typicode.com/posts?title=${title}`)
-    .then((res)=>{
-      setPosts(res.data);
-      setLoading(false);
-    })
-    .catch((err)=>{
-      console.log(err);
-      setLoading(false);
-    })
+  const searchPostsByTitle = (title) => {
+    const filteredPosts = posts.filter(post => post.title.toLowerCase().includes(title.toLowerCase()));
+    setPosts(filteredPosts);
   }
 
 
@@ -48,13 +41,7 @@ function App(){
     <div className="App">
       <h1>Welcome to Blogger</h1>
       <h2>Latest Posts</h2>
-      <div className="searchDiv">
-        <label htmlFor="search">Search by Title:</label><br/>
-        <input type="text" id="search" name="search" onChange={(e) => {
-          const title = e.target.value;
-          searchpostsbytitle(title);
-        }}/>
-      </div>
+      
       <div className="filteringDiv">
         <div className="filter">
         <label htmlFor="userId">Filter by User:</label><br/>
@@ -116,6 +103,13 @@ function App(){
           <option value="1">Descending</option>
         </select>
         </div>
+        <div className="searchDiv">
+        <label htmlFor="search">Search by Title:</label><br/>
+        <input type="text" id="search" name="search" onChange={(e) => {
+          const title = e.target.value;
+          searchPostsByTitle(title);
+        }}/>
+      </div>
       </div>
       {loading ? (<div className="loader">Loading...</div>) : (
         <div className="posts-container">
